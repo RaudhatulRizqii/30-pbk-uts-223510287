@@ -1,40 +1,60 @@
-<script setup>
-import { ref } from 'vue'
-
-defineProps({
-  msg: String,
-})
-
-const count = ref(0)
-</script>
-
 <template>
-  <h1>{{ msg }}</h1>
-
-  <div class="card">
-    <button type="button" @click="count++">count is {{ count }}</button>
-    <p>
-      Edit
-      <code>components/HelloWorld.vue</code> to test HMR
-    </p>
-  </div>
-
-  <p>
-    Check out
-    <a href="https://vuejs.org/guide/quick-start.html#local" target="_blank"
-      >create-vue</a
-    >, the official Vue + Vite starter
-  </p>
-  <p>
-    Install
-    <a href="https://github.com/vuejs/language-tools" target="_blank">Volar</a>
-    in your IDE for a better DX
-  </p>
-  <p class="read-the-docs">Click on the Vite and Vue logos to learn more</p>
+  <li class="album-item">
+    <div class="album-item-content">
+      <h5>Title: {{ album.title }}</h5>
+      <router-link :to="albumLink" class="view-album-button">
+        View Album
+      </router-link>
+    </div>
+  </li>
 </template>
 
+<script setup>
+import { defineProps, computed } from "vue";
+import { useRouter } from "vue-router";
+
+const props = defineProps({
+  album: Object,
+});
+
+const router = useRouter();
+
+const albumLink = computed(() => `/albums/${props.album.userId}`);
+</script>
+
 <style scoped>
-.read-the-docs {
-  color: #888;
+h5 {
+  font-weight: bold;
+}
+
+.album-item {
+  margin-bottom: 1rem;
+  border-radius: 7px;
+  padding: 10px;
+  background-color: #9db2bf;
+}
+
+.album-item-content {
+  margin-bottom: 1rem;
+}
+
+.view-album-button {
+  display: inline-block;
+  background-color: #007bff;
+  color: #fff;
+  padding: 8px 16px;
+  font-size: 14px;
+  text-decoration: none;
+  border-radius: 5px;
+  margin-top: 10px;
+  transition: background-color 0.3s ease; 
+}
+
+.view-album-button:hover {
+  background-color: #0056b3;
+}
+
+.view-album-button:focus {
+  outline: none;
 }
 </style>
